@@ -1,15 +1,18 @@
 <template>
-  <div class="container">
-    <div class="login" v-if="isLogged == false">
-      <app-login> </app-login>
-    </div>
-    <div class="dashboard" v-else>
-      <app-dashboard></app-dashboard>
-    </div>
-  </div>
+  <div class="container">    
+        <div class="login" v-if="isLogged == false">
+          <app-login> </app-login>
+        </div>
+      <transition name="fade" type="animation">
+        <div class="dashboard" v-if="isLogged == true">
+          <app-dashboard></app-dashboard>
+        </div>
+      </transition>
+</div>
 </template>
 
 <script>
+  require('bootstrap')
   import Login from './components/Login.vue'
   import Dashboard from './components/Dashboard.vue'
 
@@ -47,6 +50,37 @@ export default {
     position: relative;
     margin: 15% auto;
     padding: 2.5%;
+  }
+
+  .fade-enter {
+    opacity: 0;
+  }
+
+  .fade-enter-active  {
+    animation: slide-in 1s ease-out forwards;
+    transition: opacity .5s;
+  }
+  
+  .fade-leave-active {
+    animation: slide-out 1s ease-out forwards;
+    transition: opacity 3s;
+    opacity: 0;
+  }
+
+  @keyframes slide-in {
+    from {
+      transform: translateY(0);
+    } to {
+      transform: translateY(20px);
+    }
+  }
+
+   @keyframes slide-out {
+    from {
+      transform: translateY(0);
+    } to {
+      transform: translateY(20px);
+    }
   }
 </style>
 
